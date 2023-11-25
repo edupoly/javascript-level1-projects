@@ -1,34 +1,27 @@
 <html>
     <head></head>
     <body>
-        <h1 id="counter"></h1>
-        <button onclick="decrementCount()">Decrement</button>
-        <button onclick="resetCounter()">Reset</button>
-        <button onclick="incrementCount()">Increment</button>
-       
+        <input type="text" id="newtodo">
+        <button onclick="addTodo()">Add todo</button>
+        <ul id="todos"></ul>
         <script>
-            var count = 0;
-            document.getElementById("counter").innerHTML=count;
-            function incrementCount(){
-                count++;
-                document.getElementById("counter").innerHTML=count;
+            var todolist = ["get bmw",'make a toy car'];
+            function genUI(){
+                document.getElementById("todos").innerHTML='';
+                todolist.forEach(function(todo,i){
+                    var newTodoli = document.createElement("li");
+                    newTodoli.innerHTML=todo;
+                    document.getElementById("todos").appendChild(newTodoli)
+                })
             }
-            function decrementCount(){
-                count--;
-                if(count===-1){
-                    alert("Counter cannot be less than ZERO")
-                }
-                else{
-                    document.getElementById("counter").innerHTML=count;
-                }
+            genUI();
+            function addTodo(){
+                var newtodo = document.getElementById("newtodo").value;
+                todolist.push(newtodo);
+                document.getElementById('newtodo').value=''
+                genUI()
             }
-            function resetCounter(){
-                var confirmFlag = confirm("Are you sure to Reset the counter!!! \n counter will start again from ZERO...")
-                if(confirmFlag===true){
-                    count=0;
-                    document.getElementById("counter").innerHTML=count;
-                }
-            }
+            
         </script>
     </body>
 </html>
