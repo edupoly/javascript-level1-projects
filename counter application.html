@@ -1,27 +1,156 @@
 <html>
     <head></head>
     <body>
-        <input type="text" id="newtodo">
+
+        <input type="text" id="title" placeholder="Enter Title">
+        <br>
+        <input type="text" id="description" placeholder="Enter description">
+        <br>
         <button onclick="addTodo()">Add todo</button>
+        <br>
+        <input type="radio" name="filter" value="all" onchange="filterTodos(event)" checked>
+        <label>All</label>
+        <input type="radio" name="filter" value="completed" onchange="filterTodos(event)" >
+        <label>Completed</label>
+        <input type="radio" name="filter" value="notcompleted" onchange="filterTodos(event)">
+        <label>Not Completed</label>
+        <div>
+            <b>All Todos:<span id="allCount"></span></b>
+        </div>
+        <div>
+            <b>Completed Todos:<span id="completedCount"></span></b>
+        </div>
+        <div>
+            <b>Not Completed Todos:<span id="notCompletedCount"></span></b>
+        </div>
+        
         <ul id="todos"></ul>
         <script>
-            var todolist = ["get bmw",'make a toy car'];
+            var filter='all';
+            var todolist = [
+                {
+                    "id": 1,
+                    "title": "first todo",
+                    "description": "pick up milk",
+                    "complete": true,
+                    "canceled": true,
+                    "date": 1389878466730
+                },
+                {
+                    "id": 2,
+                    "title": "second todo",
+                    "description": "learn reactjs",
+                    "complete": false,
+                    "canceled": false,
+                    "date": 1389988926901 
+                },
+                {
+                    "id": 3,
+                    "title": "third todo",
+                    "description": "go for a run",
+                    "complete": false,
+                    "canceled": false,
+                    "date": 1389992494240  
+                }
+            ];
+            
             function genUI(){
+                
+                var allTodoCount=todolist.length;
+                var completedTodoCount = todolist.filter(function(todo){
+                    return todo.complete
+                }).length;
+                var notCompletedTodoCount = todolist.filter(function(todo){
+                    return !todo.complete
+                }).length;
+                document.getElementById("allCount").innerHTML=allTodoCount;
+                document.getElementById("completedCount").innerHTML=completedTodoCount;
+                document.getElementById("notCompletedCount").innerHTML=notCompletedTodoCount;
+
                 document.getElementById("todos").innerHTML='';
-                todolist.forEach(function(todo,i){
+                var filteredtodolist;
+                if(filter==='all'){
+                    filteredtodolist=todolist;
+                }
+                if(filter==='completed'){
+                    filteredtodolist=todolist.filter(function(todo){
+                        return todo.complete
+                    });
+                }
+                if(filter==='notcompleted'){
+                    filteredtodolist=todolist.filter(function(todo){
+                        return !todo.complete
+                    });
+                }
+                filteredtodolist.forEach(function(todo,i){
                     var newTodoli = document.createElement("li");
-                    newTodoli.innerHTML=todo;
+                    var titleh2 = document.createElement('h2');
+                    titleh2.innerHTML=todo.title;
+                    newTodoli.appendChild(titleh2);
+                    var descriptionpara = document.createElement('p');
+                    descriptionpara.innerHTML=todo.description;
+                    newTodoli.appendChild(descriptionpara);
+                    var datepara = document.createElement('p');
+                    datepara.innerHTML=todo.date;
+                    newTodoli.appendChild(datepara);
+
+                    var statuspara = document.createElement('p');
+                    statuspara.innerHTML=todo.complete;
+                    newTodoli.appendChild(statuspara);
+
+                    var donebtn = document.createElement('button');
+                    donebtn.innerHTML=todo.complete?"Undo":"Done";
+                    donebtn.onclick=function(){
+                        todolist = todolist.map(function(ftodo){
+                            if(ftodo.id===todo.id){
+                                ftodo.complete=!ftodo.complete;
+                            }
+                            return ftodo;
+                        })
+                        console.log(todolist)
+                        genUI();
+                    }
+                    newTodoli.appendChild(donebtn);
+                    var deletebtn = document.createElement('button');
+                    deletebtn.innerHTML="Delete";
+                    deletebtn.onclick=function(){
+                        todolist = todolist.filter(function(ftodo){
+                            return ftodo.id!==todo.id
+                        })
+                        genUI();
+                    }
+                    newTodoli.appendChild(deletebtn);
                     document.getElementById("todos").appendChild(newTodoli)
                 })
             }
             genUI();
             function addTodo(){
-                var newtodo = document.getElementById("newtodo").value;
-                todolist.push(newtodo);
-                document.getElementById('newtodo').value=''
+                var allTodoCount=todolist.length;
+                var completedTodoCount = todolist.filter(function(todo){
+                    return todo.complete
+                }).length;
+                var notCompletedTodoCount = todolist.filter(function(todo){
+                    return !todo.complete
+                }).length;
+                document.getElementById("allCount").innerHTML=allTodoCount;
+                document.getElementById("completedCount").innerHTML=allTodoCount;
+                document.getElementById("notCompltedCount").innerHTML=allTodoCount;
+                var title = document.getElementById("title").value;
+                var description = document.getElementById("description").value;
+                if(todolist.length===0){
+                    todolist.push({id:1,title,description,complete:false,canceled:false,date:Date.now()});
+                }
+                else{
+                    todolist.push({id:todolist[todolist.length-1]['id']+1,title,description,complete:false,canceled:false,date:Date.now()});
+                }
+                document.getElementById('title').value=''
+                document.getElementById('description').value=''
                 genUI()
             }
-            
+            function filterTodos(e){
+                filter=e.target.value;
+                genUI();
+            }
         </script>
     </body>
 </html>
