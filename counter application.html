@@ -1,6 +1,34 @@
 <html>
     <head></head>
     <body>
-        <h1>Edupoly</h1>
+        <h1 id="counter"></h1>
+        <button onclick="decrementCount()">Decrement</button>
+        <button onclick="resetCounter()">Reset</button>
+        <button onclick="incrementCount()">Increment</button>
+       
+        <script>
+            var count = 0;
+            document.getElementById("counter").innerHTML=count;
+            function incrementCount(){
+                count++;
+                document.getElementById("counter").innerHTML=count;
+            }
+            function decrementCount(){
+                count--;
+                if(count===-1){
+                    alert("Counter cannot be less than ZERO")
+                }
+                else{
+                    document.getElementById("counter").innerHTML=count;
+                }
+            }
+            function resetCounter(){
+                var confirmFlag = confirm("Are you sure to Reset the counter!!! \n counter will start again from ZERO...")
+                if(confirmFlag===true){
+                    count=0;
+                    document.getElementById("counter").innerHTML=count;
+                }
+            }
+        </script>
     </body>
 </html>
