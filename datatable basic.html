@@ -2,9 +2,16 @@
     <head>
         <script src="data.js"></script>
     </head>
-    <body>
+    <body style="width:80%;margin:0px auto;text-align: center;">
         <h1>Edupoly Data Table</h1>
-        <table width="80%" align="center" border="2" cellspacing="0">
+        PerPage:
+        <select name="perpage" id="perpage" onchange="setperpage(event)">
+            <option value="5">5</option>
+            <option value="10" selected>10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+        </select>
+        <table align="center" border="2" cellspacing="0">
             <thead>
                 <tr>
                     <th onclick="sortBy(0)">Name</th>
@@ -26,6 +33,10 @@
             sortIndex=0;
             function sortBy(index){
                 sortIndex=index;
+                genUI();
+            }
+            function setperpage(event){
+                perpage=event.target.value;
                 genUI();
             }
             function genUI(){
