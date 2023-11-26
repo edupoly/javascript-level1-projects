@@ -1,29 +1,140 @@
 <html>
-    <head></head>
-    <body>
+    <head>
+        <style>
+            *{
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            }
+            body{
+                width: 80%;
+                margin: 0px auto;
+            }
+            #header{
+                display: flex;
+                flex-wrap: wrap;
+                background: hsla(333, 100%, 53%, 1);
+                background: linear-gradient(90deg, #ff0f7b 0%, hsla(33, 94%, 57%, 1) 100%);
+                justify-content:space-between;
+                padding:25px;
+                margin-bottom: 10px;
+            }
+            #header h1{
+                flex-grow: 2;
+                color:white
+            }
+            #header div{
+                padding:10px;
+                display: flex;
+                align-items: center;
+            }
+            
+            #header div b{
+                border-radius: 10px;
+                padding: 10px 10px;
+                background-color: rgb(100, 41, 183);
+                color:white;
+            }
+            #header div span{
+                background: hsla(48, 78%, 82%, 1);
+                background: linear-gradient(90deg, rgb(245, 192, 173) 0%, hsla(340, 87%, 59%, 1) 100%);
+                border-radius: 10px;
+                padding: 2px 10px;
+                color:white;
+                margin-left: 10px;
+            }
+            #addTodo{
+                display: flex;
+                flex-wrap: wrap;
+            }
+            #addTodo #controls{
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+            }
+            #controls{
 
-        <input type="text" id="title" placeholder="Enter Title">
-        <br>
-        <input type="text" id="description" placeholder="Enter description">
-        <br>
-        <button onclick="addTodo()">Add todo</button>
-        <br>
-        <input type="radio" name="filter" value="all" onchange="filterTodos(event)" checked>
-        <label>All</label>
-        <input type="radio" name="filter" value="completed" onchange="filterTodos(event)" >
-        <label>Completed</label>
-        <input type="radio" name="filter" value="notcompleted" onchange="filterTodos(event)">
-        <label>Not Completed</label>
-        <div>
-            <b>All Todos:<span id="allCount"></span></b>
-        </div>
-        <div>
-            <b>Completed Todos:<span id="completedCount"></span></b>
-        </div>
-        <div>
-            <b>Not Completed Todos:<span id="notCompletedCount"></span></b>
+            }
+            #controls label{
+                margin-top: 10px;
+
+            }
+            #controls input{
+                display: block;
+                line-height: 40px;
+                margin: 10px 0px;
+                font-size:20px;
+            }
+            #addBtn{
+                width:100px;
+                text-align: center;
+                background-color: #ff0f7b;
+                margin: 10px 0px 10px 10px;
+                border-radius: 10px;
+                color:white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid;
+            }
+            #todos{
+                display: flex;
+                flex-direction: column;
+                padding:0px;
+            }
+            #todos li{
+
+                list-style: none;
+                position: relative;
+                top:0px;
+                left:0px;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                height:60px;
+                margin:10px 0px;
+                border-radius: 5px;
+                box-shadow: 3px 3px 10px -5px;
+                /* background: hsla(213, 62%, 45%, 1);
+                background: linear-gradient(90deg, hsla(213, 62%, 45%, 1) 0%, hsla(203, 89%, 71%, 1) 50%, hsla(0, 0%, 96%, 1) 100%); */
+
+            }
+            #todos li h2{
+                margin:0px;
+            }
+            .delBtn{
+                position: absolute;
+                top:0px;
+                right: 0px;
+                color:red;
+                margin:5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="header">
+            <h1>Edupoly Todolist</h1>
+            <div onclick="filterTodos('all')">
+                <b>All <span id="allCount"></span></b>
+            </div>
+            <div onclick="filterTodos('completed')">
+                <b>Completed <span id="completedCount"></span></b>
+            </div>
+            <div onclick="filterTodos('notcompleted')">
+                <b>Pending <span id="notCompletedCount"></span></b>
+            </div>
         </div>
         
+        <div id="addTodo">
+            <div id="controls">
+                <!-- <label for="title">Enter Title</label> -->
+                <input type="text" id="title" placeholder="Enter Title">
+                <!-- <label for="description ">Enter Description</label> -->
+                <input type="text" id="description" placeholder="Enter description">
+            </div>
+            <div id="addBtn">
+                <h1 onclick="addTodo()">+</h1>
+            </div>
+        </div>
+        <h1 id="heading"></h1>
         <ul id="todos"></ul>
         <script>
             var filter='all';
@@ -32,16 +143,16 @@
                     "id": 1,
                     "title": "first todo",
                     "description": "pick up milk",
-                    "complete": true,
-                    "canceled": true,
+                    "complete": false,
+                    "canceled": false,
                     "date": 1389878466730
                 },
                 {
                     "id": 2,
                     "title": "second todo",
                     "description": "learn reactjs",
-                    "complete": false,
-                    "canceled": false,
+                    "complete": true,
+                    "canceled": true,
                     "date": 1389988926901 
                 },
                 {
@@ -70,33 +181,40 @@
                 document.getElementById("todos").innerHTML='';
                 var filteredtodolist;
                 if(filter==='all'){
+                    document.getElementById("heading").innerHTML="All Todos";
                     filteredtodolist=todolist;
                 }
                 if(filter==='completed'){
+                    document.getElementById("heading").innerHTML="Complted Todos";
                     filteredtodolist=todolist.filter(function(todo){
                         return todo.complete
                     });
                 }
                 if(filter==='notcompleted'){
                     filteredtodolist=todolist.filter(function(todo){
+                        document.getElementById("heading").innerHTML="Incomplte Todos";
                         return !todo.complete
                     });
                 }
                 filteredtodolist.forEach(function(todo,i){
                     var newTodoli = document.createElement("li");
+
+                    var statuspara = document.createElement('p');
+                    statuspara.innerHTML=todo.complete?"<span style='font-size:20px;'>&#9989;</span>":"pending";
+                    newTodoli.appendChild(statuspara);
+
                     var titleh2 = document.createElement('h2');
                     titleh2.innerHTML=todo.title;
                     newTodoli.appendChild(titleh2);
+                    var datepara = document.createElement('p');
+                    datepara.innerHTML=(new Date(todo.date)).toLocaleDateString();
+                    newTodoli.appendChild(datepara);
                     var descriptionpara = document.createElement('p');
                     descriptionpara.innerHTML=todo.description;
                     newTodoli.appendChild(descriptionpara);
-                    var datepara = document.createElement('p');
-                    datepara.innerHTML=todo.date;
-                    newTodoli.appendChild(datepara);
+                    
 
-                    var statuspara = document.createElement('p');
-                    statuspara.innerHTML=todo.complete;
-                    newTodoli.appendChild(statuspara);
+                    
 
                     var donebtn = document.createElement('button');
                     donebtn.innerHTML=todo.complete?"Undo":"Done";
@@ -112,7 +230,8 @@
                     }
                     newTodoli.appendChild(donebtn);
                     var deletebtn = document.createElement('button');
-                    deletebtn.innerHTML="Delete";
+                    deletebtn.innerHTML="&#10060;";
+                    deletebtn.classList.add('delBtn')
                     deletebtn.onclick=function(){
                         todolist = todolist.filter(function(ftodo){
                             return ftodo.id!==todo.id
@@ -147,8 +266,8 @@
                 document.getElementById('description').value=''
                 genUI()
             }
-            function filterTodos(e){
-                filter=e.target.value;
+            function filterTodos(f){
+                filter=f;
                 genUI();
             }
         </script>
