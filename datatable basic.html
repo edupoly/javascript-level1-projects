@@ -11,6 +11,7 @@
             <option value="15">15</option>
             <option value="20">20</option>
         </select>
+        <input type="text" placeholder="Search..." onkeyup="search(event.target.value)">
         <table align="center" border="2" cellspacing="0">
             <thead>
                 <tr>
@@ -27,21 +28,30 @@
             </tbody>
         </table>
         <script>
-            console.log(data)
+            allEmployees=data;
             var startIndex=0;
             var perpage=10;
             sortIndex=0;
             function sortBy(index){
                 sortIndex=index;
-                genUI();
+                genUI(allEmployees);
             }
             function setperpage(event){
                 perpage=event.target.value;
-                genUI();
+                genUI(allEmployees);
             }
-            function genUI(){
-                document.getElementById("d1").innerHTML=""
-                data
+            function search(key){
+                console.log('HI')
+                var searchResult = allEmployees.filter(function(emp){
+                    if(emp.toString().includes(key)){
+                        return true
+                    }
+                })
+                genUI(searchResult)
+            }
+            function genUI(emps){
+                document.getElementById("d1").innerHTML="";
+                emps
                 .slice(startIndex,startIndex+perpage)
                 .sort(function(a,b){if(a[sortIndex]>b[sortIndex]){return 1}else{return -1}})
                 .forEach(function(emp){
@@ -55,7 +65,7 @@
                     document.getElementById("d1").appendChild(newtr)
                 })
             }
-            genUI();
+            genUI(allEmployees);
         </script>
     </body>
 </html>
