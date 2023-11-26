@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <script src="data.js"></script>
+    </head>
+    <body>
+        <table width="80%" align="center" border="2" cellspacing="0">
+            <thead>
+                <tr>
+                    <th onclick="sortBy(0)">Name</th>
+                    <th onclick="sortBy(1)">Position</th>
+                    <th onclick="sortBy(2)">Office</th>
+                    <th onclick="sortBy(3)">Extn</th>
+                    <th onclick="sortBy(4)">Start Date</th>
+                    <th onclick="sortBy(5)">Salary</th>
+                </tr>
+            </thead>
+            <tbody id="d1">
+
+            </tbody>
+        </table>
+        <script>
+            console.log(data)
+            var startIndex=0;
+            var perpage=10;
+            sortIndex=0;
+            function sortBy(index){
+                sortIndex=index;
+                genUI();
+            }
+            function genUI(){
+                document.getElementById("d1").innerHTML=""
+                data
+                .slice(startIndex,startIndex+perpage)
+                .sort(function(a,b){if(a[sortIndex]>b[sortIndex]){return 1}else{return -1}})
+                .forEach(function(emp){
+                    console.log(emp)
+                    var newtr = document.createElement("tr")
+                    newtr.innerHTML=`
+                                        ${emp.map(function(v){
+                                            return `<td>${v}</td>`
+                                        }).join("")}
+                    `;
+                    document.getElementById("d1").appendChild(newtr)
+                })
+            }
+            genUI();
+        </script>
+    </body>
+</html>
