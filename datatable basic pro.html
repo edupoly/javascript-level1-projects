@@ -1,0 +1,141 @@
+<html>
+    <head>
+        <script src="data.js"></script>
+        <style>
+            *{
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            }
+            #pagenumbers b{
+                display: inline-block;
+                padding:5px;
+            }
+            .header{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+                padding:20px;
+            }
+            .header input{
+                width:300px;
+                line-height: 30px;
+                border-radius: 10px;
+                border:1px solid gray;
+                padding: 10px;
+            }
+            thead{
+                color:white;
+                background-color: black;
+            }
+            tbody tr:nth-child(3n+1){
+                background-color: #838382
+            }
+            tbody tr:nth-child(3n+2){
+                background-color: #b5b7b3
+            }
+            tbody tr:nth-child(3n){
+                background-color: #dddedc
+            }
+            
+        </style>
+    </head>
+    <body style="width:70%;margin:0px auto;text-align: center;">
+        <h1>Edupoly Data Table</h1>
+        <div class="header">
+            <div>
+                PerPage:
+                <select name="perpage" id="perpage" onchange="setperpage(event)">
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+            </div>
+            <div>
+                <input type="text" placeholder="Search..." onkeyup="search(event.target.value)">
+            </div>
+        </div>
+        
+        <table width="100%" align="center" border="2" cellpadding="10" cellspacing="0">
+            <thead>
+                <tr>
+                    <th onclick="sortBy(0)">Name</th>
+                    <th onclick="sortBy(1)">Position</th>
+                    <th onclick="sortBy(2)">Office</th>
+                    <th onclick="sortBy(3)">Extn</th>
+                    <th onclick="sortBy(4)">Start Date</th>
+                    <th onclick="sortBy(5)">Salary</th>
+                </tr>
+            </thead>
+            <tbody id="d1">
+
+            </tbody>
+            <tfoot align="right">
+                <td id="pagination" colspan="6">
+                    <button onclick="prev()">Prev</button>
+                    <span id="pagenumbers"></span>
+                    <button onclick="next()">Next</button>
+                </td>
+            </tfoot>
+        </table>
+        <script>
+            allEmployees=data;
+            var startIndex=0;
+            var perpage=10;
+            sortIndex=0;
+            function sortBy(index){
+                sortIndex=index;
+                genUI(allEmployees);
+            }
+            function setperpage(event){
+                perpage=event.target.value;
+                genUI(allEmployees);
+            }
+            function search(key){
+                console.log('HI')
+                var searchResult = allEmployees.filter(function(emp){
+                    if(emp.toString().includes(key)){
+                        return true
+                    }
+                })
+                genUI(searchResult)
+            }
+            function prev(){
+                startIndex=startIndex-perpage;
+                genUI(allEmployees)
+            }
+            function next(){
+                startIndex=startIndex+perpage;
+                genUI(allEmployees)
+            }
+            function genUI(emps){
+                document.getElementById("d1").innerHTML="";
+                document.getElementById("pagenumbers").innerHTML='';
+                emps
+                .slice(startIndex,startIndex+perpage)
+                .sort(function(a,b){if(a[sortIndex]>b[sortIndex]){return 1}else{return -1}})
+                .forEach(function(emp){
+                    var newtr = document.createElement("tr")
+                    newtr.innerHTML=`
+                                        ${emp.map(function(v){
+                                            return `<td>${v}</td>`
+                                        }).join("")}
+                    `;
+                    document.getElementById("d1").appendChild(newtr)
+                })
+                for(var i=1;i<=emps.length/perpage;i++){
+                    var pageno = document.createElement("b");
+                    pageno.innerHTML=i;
+                    pageno.onclick=function(e){
+                        document.getElementById("pagenumbers").innerHTML='';
+                        perpage=+perpage;
+                        startIndex=+((e.target.innerHTML-1)*perpage);
+                        genUI(allEmployees)
+                    }
+                    document.getElementById("pagenumbers").appendChild(pageno)
+                }
+            }
+            genUI(allEmployees);
+        </script>
+    </body>
+</html>
