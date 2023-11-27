@@ -14,7 +14,9 @@
                 box-shadow: 10px 10px 20px -10px;
             }
             .accordionitem{
-                background-color: lightblue;
+                background: hsla(12, 84%, 68%, 1);
+                box-shadow: -10px 10px 15px -5px grey;
+                background: linear-gradient(90deg, hsla(12, 84%, 68%, 1) 0%, hsla(343, 100%, 66%, 1) 100%);
                 padding:10px;
 
                 border:1px solid rgb(235, 231, 231);
@@ -32,7 +34,8 @@
                 margin:0px 0px 0px 20px;
                 text-align: justify;
                 color:black;
-                background-color: rgb(222, 233, 237);
+                background: hsla(233, 100%, 90%, 1);
+                background: linear-gradient(90deg, hsla(233, 100%, 90%, 1) 0%, hsla(0, 0%, 89%, 1) 100%);
             }
             .accordionitem span{
                 width: 40px;
@@ -103,6 +106,7 @@
                 else{
                     document.querySelectorAll("p").forEach(function(el){
                         el.classList.replace("showitem",'hideitem');
+                        el.previousElementSibling.children[0].innerHTML="&#8853;";
                     })
                     console.log(e.target.nextElementSibling.classList)
                     e.target.nextElementSibling.classList.replace("hideitem",'showitem')
