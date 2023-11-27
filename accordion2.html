@@ -26,7 +26,6 @@
             }
             
             .accordionitem p{
-                display: none;
                 font-size: initial;
                 padding:15px;
                 border-radius: 10px;
@@ -36,12 +35,16 @@
                 background-color: rgb(222, 233, 237);
             }
             .accordionitem span{
-
-
                 width: 40px;
                 text-align: center;
                 border-radius: 50%;
                 height:40px;
+            }
+            .showitem{
+                display: block;
+            }
+            .hideitem{
+                display: none;
             }
         </style>
     </head>
@@ -86,19 +89,23 @@
         </div>
         
         <script>
+            document.querySelectorAll(".accordionitem p").forEach(function(el){
+                el.classList.add('hideitem')
+            })
             function expandCheyy(e){
-                
-                if(e.target.nextElementSibling.style.display==='block'){
+                console.log(e.target.nextElementSibling.classList.contains('hideitem'))
+                if(e.target.nextElementSibling.classList.contains('showitem')){
                     document.querySelectorAll("p").forEach(function(el){
-                        el.style.display='none'
+                        el.classList.replace('showitem',"hideitem");
                     })
                     e.target.children[0].innerHTML="&#8853;";
                 }
                 else{
                     document.querySelectorAll("p").forEach(function(el){
-                        el.style.display='none'
+                        el.classList.replace("showitem",'hideitem');
                     })
-                    e.target.nextElementSibling.style.display='block'
+                    console.log(e.target.nextElementSibling.classList)
+                    e.target.nextElementSibling.classList.replace("hideitem",'showitem')
                     e.target.children[0].innerHTML="&#8861";
                 }
             }
