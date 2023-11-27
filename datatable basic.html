@@ -1,6 +1,12 @@
 <html>
     <head>
         <script src="data.js"></script>
+        <style>
+            #pagenumbers b{
+                display: inline-block;
+                padding:5px;
+            }
+        </style>
     </head>
     <body style="width:80%;margin:0px auto;text-align: center;">
         <h1>Edupoly Data Table</h1>
@@ -12,7 +18,7 @@
             <option value="20">20</option>
         </select>
         <input type="text" placeholder="Search..." onkeyup="search(event.target.value)">
-        <table align="center" border="2" cellspacing="0">
+        <table align="center" border="2" cellpadding="10" cellspacing="0">
             <thead>
                 <tr>
                     <th onclick="sortBy(0)">Name</th>
@@ -26,6 +32,13 @@
             <tbody id="d1">
 
             </tbody>
+            <tfoot align="right">
+                <td id="pagination" colspan="6">
+                    <button onclick="prev()">Prev</button>
+                    <span id="pagenumbers"></span>
+                    <button onclick="next()">Next</button>
+                </td>
+            </tfoot>
         </table>
         <script>
             allEmployees=data;
@@ -49,13 +62,21 @@
                 })
                 genUI(searchResult)
             }
+            function prev(){
+                startIndex=startIndex-perpage;
+                genUI(allEmployees)
+            }
+            function next(){
+                startIndex=startIndex+perpage;
+                genUI(allEmployees)
+            }
             function genUI(emps){
                 document.getElementById("d1").innerHTML="";
+                document.getElementById("pagenumbers").innerHTML='';
                 emps
                 .slice(startIndex,startIndex+perpage)
                 .sort(function(a,b){if(a[sortIndex]>b[sortIndex]){return 1}else{return -1}})
                 .forEach(function(emp){
-                    console.log(emp)
                     var newtr = document.createElement("tr")
                     newtr.innerHTML=`
                                         ${emp.map(function(v){
@@ -64,6 +85,17 @@
                     `;
                     document.getElementById("d1").appendChild(newtr)
                 })
+                for(var i=1;i<=emps.length/perpage;i++){
+                    var pageno = document.createElement("b");
+                    pageno.innerHTML=i;
+                    pageno.onclick=function(e){
+                        document.getElementById("pagenumbers").innerHTML='';
+                        perpage=+perpage;
+                        startIndex=+((e.target.innerHTML-1)*perpage);
+                        genUI(allEmployees)
+                    }
+                    document.getElementById("pagenumbers").appendChild(pageno)
+                }
             }
             genUI(allEmployees);
         </script>
