@@ -1,0 +1,107 @@
+<html>
+    <head>
+        <style>
+            body{
+                width:60%;
+                margin:10px auto;
+
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            }
+            #accordion{
+                border-radius: 15px;
+                border:1px solid white;
+                overflow: hidden;
+                box-shadow: 10px 10px 20px -10px;
+            }
+            .accordionitem{
+                background-color: lightblue;
+                padding:10px;
+
+                border:1px solid rgb(235, 231, 231);
+            }
+            .accordionitem .header{
+                display: flex;
+                justify-content: space-between;
+                font-size: 30px;
+            }
+            
+            .accordionitem p{
+                display: none;
+                font-size: initial;
+                padding:15px;
+                border-radius: 10px;
+                margin:0px 0px 0px 20px;
+                text-align: justify;
+                color:black;
+                background-color: rgb(222, 233, 237);
+            }
+            .accordionitem span{
+
+
+                width: 40px;
+                text-align: center;
+                border-radius: 50%;
+                height:40px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="accordion">
+            <div class="accordionitem">
+                <div class="header" onclick="expandCheyy(event)">
+                    Javascript
+                    <span>&#8853;</span>
+                </div>
+                <p>
+                    We provide an end-to-end guidance to all topics necessary for current industry level standards. We focus on foundational topics so that students have a strong knowledge on basics.
+                    We provide an end-to-end guidance to all topics necessary for current industry level standards. We focus on foundational topics so that students have a strong knowledge on basics.We provide an end-to-end guidance to all topics necessary for current industry level standards. We focus on foundational topics so that students have a strong knowledge on basics.
+                    We provide an end-to-end guidance to all topics necessary for current industry level standards. We focus on foundational topics so that students have a strong knowledge on basics.
+                </p>
+            </div>
+
+            <div class="accordionitem">
+                <div class="header" onclick="expandCheyy(event)">
+                    CSS
+                    <span>&#8853;</span>
+                </div>
+                <p>
+        
+                    Daily class videos are recorded and made available for all students for revisiting the topics.
+                    Daily class videos are recorded and made available for all students for revisiting the topics.
+                    Daily class videos are recorded and made available for all students for revisiting the topics.ily class videos are recorded and made available for all students for revisiting the topics.
+                    Daily class videos are recorded and made available for all students for revisiting the topics.
+                    Daily class videos are recorded and made available for all students for revisiting the topics.
+                </p>
+            </div>
+            <div class="accordionitem">
+                <div class="header" onclick="expandCheyy(event)">
+                    HTML
+                    <span>&#8853;</span>
+                </div>
+                <p>
+                    We provide internship and training certificates on successful completion of the courses.We provide internship and training certificates on successful completion of the courses.We provide internship and training certificates on successful completion of the courses.We provide internship and training certificates on successful completion of the courses.We provide internship and training certificates on successful completion of the courses.We provide internship and training certificates on successful completion of the courses.We provide internship and training certificates on successful completion of the courses.
+                </p>
+            </div>
+
+        </div>
+        
+        <script>
+            function expandCheyy(e){
+                
+                if(e.target.nextElementSibling.style.display==='block'){
+                    document.querySelectorAll("p").forEach(function(el){
+                        el.style.display='none'
+                    })
+                    e.target.children[0].innerHTML="&#8853;";
+                }
+                else{
+                    document.querySelectorAll("p").forEach(function(el){
+                        el.style.display='none'
+                    })
+                    e.target.nextElementSibling.style.display='block'
+                    e.target.children[0].innerHTML="&#8861";
+                }
+            }
+        </script>
+    </body>
+</html>
