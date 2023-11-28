@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <script src="data.js"></script>
+        <style>
+            *{
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            }
+            #cartapp{
+                display: flex;
+                flex-wrap: wrap;
+            }
+            #products{
+                width:70%;
+                box-sizing: border-box;
+                display: flex;
+                flex-wrap: wrap;
+            }
+            #products li{
+                width:22%;
+                list-style: none;
+                box-sizing: border-box;
+                padding:10px;
+                background-color: rgb(235, 232, 232);
+                margin:10px;
+                display: flex;
+                flex-direction: column;
+                justify-content:space-between;
+            }
+            #cart{
+                width:30%;
+                box-sizing: border-box;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Edupoly</h1>
+        <div id="cartapp">
+            <ul id="products">
+
+            </ul>
+            <div id="cart">
+                
+            </div>
+        </div>
+        <script>
+            var allProducts = JSON.parse(JSON.stringify(data));
+            function addToCart(e){
+                console.dir(e.target.attributes['data-product'].value);
+            }
+            function genUI(){
+                var productlist =  `
+                    ${allProducts.map(function(product,i){
+                        console.log(product)
+                        return  `<li>
+                                    <img src=${"https://raw.githubusercontent.com/ParasGarg/Online-Grocery-Store/master"+product.images[0]}></img>
+                                    <b>${product.title}</b>
+                                    <i>${product.price}</i>
+                                    <button ${this.addEventListener("click",addToCart)} data-product=${product['_id']}>Add To Cart</button>
+                                </li>`
+                    }).join("")}
+                `
+                document.getElementById('products').innerHTML=productlist;
+            }
+            genUI();
+           
+        </script>
+    </body>
+</html>
