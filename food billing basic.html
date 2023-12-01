@@ -20,11 +20,12 @@
                 list-style: none;
                 box-sizing: border-box;
                 padding:10px;
-                background-color: rgb(235, 232, 232);
+                box-shadow: 1px 1px 5px -1px;
                 margin:10px;
                 display: flex;
                 flex-direction: column;
                 justify-content:space-between;
+                border-radius: 10px;
             }
             #billing{
                 padding:30px 10px;
@@ -60,6 +61,12 @@
             #billing h1{
                 display: flex;
                 justify-content: space-between;
+            }
+            .btn{
+                line-height: 30px;
+                border: 0px;
+                border-radius: 10px;
+                cursor: pointer;
             }
         </style>
     </head>
@@ -162,6 +169,8 @@
                     iprice.innerHTML=product.price;
                     newli.appendChild(iprice);
                     var addCartBtn = document.createElement("button");
+                    addCartBtn.classList.add("btn");
+                    addCartBtn.classList.add("btn-success");
                     addCartBtn.innerHTML='add to cart';
                     addCartBtn.onclick=function(){
                         addToCart(product);
