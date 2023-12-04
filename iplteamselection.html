@@ -1,9 +1,119 @@
 <html>
-    <head></head>
-    <body>
+    <head>
         <script src="players.js"></script>
+        <style>
+            *{
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            }
+            .main li{
+                list-style: none;
+            }
+            .main{
+                display: flex;
+                flex-wrap: wrap;
+                border:1px solid;
+                justify-content: space-around;
+            }
+            #categories,#selectedPlayers{
+                width:400px;
+                border:1px solid;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <div>
+                <h2>All Players</h2>
+                <ul id="categories">    
+                    
+                </ul>
+            </div>
+            <div>
+                <h2>Selected Players</h2>
+                <ul id="selectedPlayers">
+
+                </ul>
+            </div>
+            
+        </div>
         <script>
-            console.log(Object.groupBy(players,({playerType})=>playerType))
+            var players = Object.groupBy(players,({playerType})=>playerType);
+            var selectedPlayer={};
+            console.log(Object.entries(players).map(players=>players[1]).flat().filter(player=>player.selected))
+            function getSelectedPlayerCount(){
+                return Object.entries(players).map(players=>players[1]).flat().filter(player=>player.selected).length;
+            }
+            console.log(players);
+            function genUI(){
+                console.log(players)
+                document.getElementById("categories").innerHTML="";
+                Object.keys(players).forEach(function(key){
+                    var newli = document.createElement("li");
+                    var playerTypeh2=document.createElement('h2');
+                    playerTypeh2.innerHTML=key;
+                    newli.appendChild(playerTypeh2)
+                    var playerslistul = document.createElement("ul");
+                    players[key].forEach(function(player){
+                        var playerli = document.createElement("li");
+                        var selectionBox = document.createElement("input");
+                        selectionBox.type='checkbox';
+                        selectionBox.checked=player.selected;
+                        selectionBox.addEventListener("click",function(e){
+                            if(getSelectedPlayerCount()<11){
+                                player.selected=e.target.checked;
+                                genUI();
+                                genSlectedPlayers();
+                                getSelectedPlayerCount()
+                            }
+                            else{
+                                selectionBox.checked=player.selected;
+                                alert("selecting more than 11 is not allowed")
+                            }
+                        })
+                        playerli.appendChild(selectionBox);
+                        var playername = document.createElement('b');
+                        playername.innerHTML=player.fullName;
+                        playerli.appendChild(playername)
+                        playerslistul.appendChild(playerli);
+                    })
+                    newli.appendChild(playerslistul)
+                    document.getElementById("categories").appendChild(newli)
+                })
+            }
+            function genSlectedPlayers(){
+                document.getElementById("selectedPlayers").innerHTML="";
+                Object.keys(players).forEach(function(key){
+                    var newli = document.createElement("li");
+                    var playerTypeh2=document.createElement('h2');
+                    playerTypeh2.innerHTML=key;
+                    newli.appendChild(playerTypeh2)
+                    var playerslistul = document.createElement("ul");
+                    players[key].forEach(function(player){
+                        if(player.selected){
+                            var playerli = document.createElement("li");
+                            var selectionBox = document.createElement("input");
+                            selectionBox.type='checkbox';
+                            selectionBox.checked=player.selected;
+                            selectionBox.addEventListener("click",function(e){
+                                player.selected=e.target.checked;
+                                genUI();
+                                genSlectedPlayers()
+                            })
+                            playerli.appendChild(selectionBox);
+                            var playername = document.createElement('b');
+                            playername.innerHTML=player.fullName;
+                            playerli.appendChild(playername)
+                            playerslistul.appendChild(playerli);
+                        }
+                        
+                    })
+                    newli.appendChild(playerslistul)
+                    document.getElementById("selectedPlayers").appendChild(newli)
+                })
+            }
+            genUI();
+            
         </script>
     </body>
 </html>
