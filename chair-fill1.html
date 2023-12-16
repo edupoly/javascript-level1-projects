@@ -1,0 +1,83 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <style>
+      body{
+        text-align: center;
+      }
+      .occupied {
+        opacity: 0.2;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <h1>Occupied:<span id="occ"></span></h1>
+      <h1>Available:<span id="ava"></span></h1>
+      <div class="d-flex">
+        <div id="openChairs">
+          
+        </div>
+        <div id="occupiedChairs">
+
+        </div>
+      </div>
+    </div>
+
+    <script>
+        var emptyChairs = [
+        "https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70",
+        "https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70",
+        "https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70",
+        "https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70",
+        "https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70",
+        "https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70"
+        ];
+        var fillChairs = [];
+        var totalChairs = 6;
+        var occupied = 0;
+        var image;
+        var image1;
+        var occupiedChairs = document.getElementById('occupiedChairs');
+        var openChairs = document.getElementById('openChairs');
+        document.getElementById('occ').innerHTML = occupied;
+        document.getElementById('ava').innerHTML = totalChairs - occupied;
+        function chairs(){
+            emptyChairs.forEach((chair,i)=>{
+                image = document.createElement('img');
+                image.src = chair;
+                image.style.width = '100px';
+                image.style.height = '200px';
+                image.onclick = (e)=>{
+                    if(e.target.className){
+                        occupied--;
+                    }
+                    else{
+                        occupied++;
+                    }
+                    document.getElementById('occ').innerHTML = occupied;
+                    document.getElementById('ava').innerHTML = totalChairs - occupied;
+                    fillChairs.push(chair);
+                    console.log(i);
+                    emptyChairs.splice(i,1);
+                    console.log(emptyChairs);
+                    occupiedChairs.innerHTML = "";
+                    fillChairs.forEach((chairs)=>{
+                        image1 = document.createElement('img');
+                        image1.src = chairs;
+                        image1.style.width = '100px';
+                        image1.style.height = '200px';
+                        image1.style.opacity = '0.2';
+                        occupiedChairs.appendChild(image1);
+                    })
+                }
+                openChairs.appendChild(image)
+            })
+        }
+        chairs()
+    </script>
+  </body>
+</html>

@@ -1,6 +1,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
+
     <script>
       var allspans=document.getElementsByTagName('span');
       function rate(r){
@@ -15,6 +16,9 @@
     </script>
 
     <style>
+      body{
+        background-color: cadetblue;
+      }
       span {
         font-size: 30px;
         cursor: pointer;
@@ -23,11 +27,13 @@
     </style>
   </head>
   <body>
-     <span onclick="rate(1)">&#9734;</span>
-        <span onclick="rate(2)">&#9734;</span>
-        <span onclick="rate(3)">&#9734;</span>
-        <span onclick="rate(4)">&#9734;</span>
-        <span onclick="rate(5)">&#9734;</span>
-        <h1>Rating:<div id="d2">0/5</div></h1>
+    <div style="margin-top: 15%;text-align: center;">
+      <span onclick="rate(1)">&#9734;</span>
+      <span onclick="rate(2)">&#9734;</span>
+      <span onclick="rate(3)">&#9734;</span>
+      <span onclick="rate(4)">&#9734;</span>
+      <span onclick="rate(5)">&#9734;</span>
+      <h1>Rating:<div id="d2">0/5</div></h1>
+    </div>
   </body>
 </html>

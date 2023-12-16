@@ -1,7 +1,12 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <style>
+      body{
+        text-align: center;
+      }
       .occupied {
         opacity: 0.2;
       }
@@ -9,44 +14,56 @@
   </head>
 
   <body>
-    <h1>Occupied:<span id="occ"></span></h1>
-    <h1>Available:<span id="ava"></span></h1>
-    <img
-      src="https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70"
-      width="100px"
-      onclick="book(event)"
-    />
-    <img
-      src="https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70"
-      width="100px"
-      onclick="book(event)"
-    />
-    <img
-      src="https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70"
-      width="100px"
-      onclick="book(event)"
-    />
-    <img
-      src="https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70"
-      width="100px"
-      onclick="book(event)"
-    />
-    <img
-      src="https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70"
-      width="100px"
-      onclick="book(event)"
-    /><img
-      src="https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70"
-      width="100px"
-      onclick="book(event)"
-    />
+    <div>
+      <h1>Occupied:<span id="occ"></span></h1>
+      <h1>Available:<span id="ava"></span></h1>
+      <div class="d-flex">
+        <div id="openChairs">
+          <img id="1"
+            src="https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70"
+            width="100px"
+            onclick="book(event,1)"
+          />
+          <img id="2"
+            src="https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70"
+            width="100px"
+            onclick="book(event,2)"
+          />
+          <img
+            src="https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70"
+            width="100px"
+            onclick="book(event)"
+          />
+          <img
+            src="https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70"
+            width="100px"
+            onclick="book(event)"
+          />
+          <img
+            src="https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70"
+            width="100px"
+            onclick="book(event)"
+          /><img
+            src="https://rukminim1.flixcart.com/image/612/612/kbxzbm80/office-study-chair/z/f/k/semi-aniline-leather-high-back-office-chair-vivan-interio-original-imaft6fyyvyzhsrg.jpeg?q=70"
+            width="100px"
+            onclick="book(event)"
+          />
+        </div>
+        <div id="occupiedChairs">
+
+        </div>
+      </div>
+    </div>
 
     <script>
       var totalChairs = 6;
       var occupied = 0;
+      var occupiedChairs = document.getElementById('occupiedChairs');
+      var openChairs = document.getElementById('openChairs');
+      var image = document.getElementById('image');
       document.getElementById('occ').innerHTML = occupied;
       document.getElementById('ava').innerHTML = totalChairs - occupied;
-      function book(e) {
+      function book(e,i) {
         if (e.target.className) {
           occupied--;
         } else {
@@ -55,6 +72,8 @@
         document.getElementById('occ').innerHTML = occupied;
         document.getElementById('ava').innerHTML = totalChairs - occupied;
         e.target.classList.toggle('occupied');
+        occupiedChairs.innerHTML += e.target.outerHTML;
+        
       }
     </script>
   </body>

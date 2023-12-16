@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <style>
+            body{
+                background-color: lightsteelblue;
+            }
+        </style>
+    </head>
+    <body>
+        <form onsubmit="event.preventDefault()" class="column w-50 needs-validation me-auto ms-auto p-2 mt-3 shadow-lg bg-white rounded-2" name="personform" validate>
+            <div class="row-md-4 position-relative">
+              <label for="validationTooltip01" class="form-label">First name</label>
+              <input type="text" name="firstname" class="form-control" id="firstname" placeholder="First name" onblur="checkfnameValidate(event)"  required>
+              <div class="invalid-tooltip" id="fname">
+                Please enter valid firstname.
+              </div>
+            </div>
+            <div class="row-md-4 position-relative">
+              <label for="validationTooltip02" class="form-label">Last name</label>
+              <input type="text" name="lastname" class="form-control" id="lastname" placeholder="Last name" onblur="checklnameValidate(event)" required>
+              <div class="invalid-tooltip" id="lname">
+                lease enter valid lastname.
+              </div>
+            </div>
+            <div class="row-md-4 position-relative">
+              <label for="validationTooltipUsername" class="form-label">Date of Birth</label>
+              <input type="date" name="dob" class="form-control" id="dob" aria-describedby="validationTooltipUsernamePrepend" onblur="checkdobValidate(event)" required>
+                <div class="invalid-tooltip" id="dob1">
+                    Please enter valid date of birth.
+                </div>
+            </div>
+            <div class="row-md-6 position-relative">
+              <label for="validationTooltip03" class="form-label">Gender :</label>
+              <input type="radio" class="form-radio" name="gender" value="male" required> : Male
+              <input type="radio" class="form-radio" name="gender" value="female" required> : Female
+              <input type="radio" class="form-radio" name="gender" value="other" required> : Others
+              <div class="invalid-tooltip">
+                Please select a gender.
+              </div>
+            </div>
+            <div class="row-md-3 position-relative">
+                <label for="validationTooltip04" class="form-label">Technologies :</label>
+                <input type="checkbox" class="form-checkbox" name="techs" value="html">html&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" class="form-checkbox" name="techs" value="css">css&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" class="form-checkbox" name="techs" value="bootstrap">bootstrap&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" class="form-checkbox" name="techs" value="react">react&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" class="form-checkbox" name="techs" value="java">java&nbsp;&nbsp;&nbsp;
+                <div class="invalid-tooltip">
+                  Please select a Technologies.
+                </div>
+            </div>
+            <div class="row-md-3 position-relative">
+                <label for="validationTooltip04" class="form-label">Country</label>
+                <select class="form-select" name="country" onblur="checkcountryValidate(event)" required>
+                  <option selected disabled value="">Choose country</option>
+                  <option value="IND">India</option>
+                  <option value="SRI">Srilanka</option>
+                  <option value="PAK">Pakistan</option>
+                  <option value="RUS">Russia</option>
+                  <option value="USA">United States Of America</option>
+                </select>
+                <div class="invalid-tooltip" id="country">
+                  Please select a valid Country.
+                </div>
+            </div>
+            <div class="row-md-3 position-relative mb-2">
+                <label for="validationTooltip04" class="form-label">Comments</label>
+                <textarea class="form-control" name="address" cols="25" rows="2" onblur="checkcommentValidate(event)" required></textarea>
+                <div class="invalid-tooltip" id="comment">
+                  Please enter a Comment.
+                </div>
+            </div>
+            <div class="row-12">
+              <button class="btn btn-primary" onclick="save(event)">Save</button>
+            </div>
+        </form>
+        <div id="peoples"></div>
+        <script>
+            var person={
+              Firstname:'',
+              Lastname:'',
+              Dob:'',
+              Gender:'',
+              Techs:[],
+              Country:'',
+              Address:''
+            }
+            var people=[];
+            var firstname = document.getElementById('firstname');
+            var lastname = document.getElementById('lastname');
+            var dob = document.getElementById('dob');
+
+            function checkfnameValidate(e){
+                if(e.target.value === ""){
+                    document.getElementById('fname').style.display = 'block'
+                    firstname.style.border = '1px solid red'
+                }
+                else{
+                    document.getElementById('fname').style.display = 'none'
+                    firstname.style.border = '1px solid gray'
+                }
+            }
+
+            function checklnameValidate(e){
+                if(e.target.value === ""){
+                    document.getElementById('lname').style.display = 'block'
+                    lastname.style.border = '1px solid red'
+                }
+                else{
+                    document.getElementById('lname').style.display = 'none'
+                    lastname.style.border = '1px solid gray'
+                }
+            }
+
+            function checkdobValidate(e){
+                if(e.target.value === ""){
+                    document.getElementById('dob1').style.display = 'block'
+                    dob.style.border = '1px solid red'
+                }
+                else{
+                    document.getElementById('dob1').style.display = 'none'
+                    dob.style.border = '1px solid gray'
+                }
+            }
+
+            function checkcountryValidate(e){
+                if(e.target.value === ""){
+                    document.getElementById('country').style.display = 'block'
+                    personform.country.style.border = '1px solid red'
+                }
+                else{
+                    document.getElementById('country').style.display = 'none'
+                    personform.country.style.border = '1px solid gray'
+                }
+            }
+
+            function checkcommentValidate(e){
+                if(e.target.value === ""){
+                    document.getElementById('comment').style.display = 'block'
+                    personform.comment.style.border = '1px solid red'
+                }
+                else{
+                    document.getElementById('comment').style.display = 'none'
+                    personform.comment.style.border = '1px solid gray'
+                }
+            }
+
+            function save(el){
+                // document.getElementById('peoples').innerHTML = "";
+                person.Firstname = firstname.value;
+                person.Lastname = lastname.value;
+                person.Dob = dob.value;
+                person.Gender = personform.gender.value;
+                person.Country = personform.country.value;
+                person.Address = personform.address.value;
+
+                // personform.techs.forEach(function(el){
+                //     if(el.checked===true){
+                //         person.Techs.push(el.value)
+                //     }
+                // })
+
+                people.push(person);
+                document.getElementById('peoples').innerHTML = JSON.stringify(people);
+                personform.reset();
+            }
+          </script>
+    </body>
+</html>
