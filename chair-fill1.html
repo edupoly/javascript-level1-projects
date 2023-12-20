@@ -6,6 +6,7 @@
     <style>
       body{
         text-align: center;
+        background-color: rgb(210, 236, 165);
       }
       .occupied {
         opacity: 0.2;
@@ -14,14 +15,16 @@
   </head>
 
   <body>
-    <div>
-      <h1>Occupied:<span id="occ"></span></h1>
-      <h1>Available:<span id="ava"></span></h1>
+    <div class="p-2" style="margin-top: 100px;">
       <div class="d-flex">
-        <div id="openChairs">
+        <h1 class="w-50">Available:<span id="ava"></span></h1>
+        <h1 class="w-50">Occupied:<span id="occ"></span></h1>
+      </div>
+      <div class="d-flex">
+        <div id="openChairs" class="w-50 me-2 p-1">
           
         </div>
-        <div id="occupiedChairs">
+        <div id="occupiedChairs" class="w-50 p-1">
 
         </div>
       </div>
@@ -43,14 +46,18 @@
         var image1;
         var occupiedChairs = document.getElementById('occupiedChairs');
         var openChairs = document.getElementById('openChairs');
+        occupiedChairs.style.border = '1px solid';
+        openChairs.style.border = '1px solid';
         document.getElementById('occ').innerHTML = occupied;
         document.getElementById('ava').innerHTML = totalChairs - occupied;
         function chairs(){
+          document.getElementById('openChairs').innerHTML = '';
             emptyChairs.forEach((chair,i)=>{
                 image = document.createElement('img');
                 image.src = chair;
                 image.style.width = '100px';
                 image.style.height = '200px';
+                image.style.margin = '5px';
                 image.onclick = (e)=>{
                     if(e.target.className){
                         occupied--;
@@ -61,7 +68,7 @@
                     document.getElementById('occ').innerHTML = occupied;
                     document.getElementById('ava').innerHTML = totalChairs - occupied;
                     fillChairs.push(chair);
-                    console.log(i);
+                    // console.log(i);
                     emptyChairs.splice(i,1);
                     console.log(emptyChairs);
                     occupiedChairs.innerHTML = "";
@@ -70,9 +77,11 @@
                         image1.src = chairs;
                         image1.style.width = '100px';
                         image1.style.height = '200px';
-                        image1.style.opacity = '0.2';
+                        image1.style.margin = '5px';
+                        image1.style.opacity = '0.5';
                         occupiedChairs.appendChild(image1);
                     })
+                    chairs();
                 }
                 openChairs.appendChild(image)
             })
