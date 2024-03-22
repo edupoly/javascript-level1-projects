@@ -34,7 +34,6 @@
             animation: ripple 600ms linear;
             background-color: rgba(255, 255, 255, 0.7);
         }
-
         @keyframes ripple {
             to {
                 transform: scale(4);
@@ -43,14 +42,12 @@
         }
     </style>
 </head>
-
 <body>
     <h1>Ripple Effect in Pure CSS and Javascript</h1>
     <button>Click here to know Ripple Effect</button>
     <script>
         function createRipple(event) {
             const button = event.currentTarget;
-
             const circle = document.createElement("span");
             const diameter = Math.max(button.clientWidth, button.clientHeight);
             const radius = diameter / 2;
