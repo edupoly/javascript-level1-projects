@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+        #d1{
+            border:2px solid red;
+            padding:20px;
+        }
+    </style>
+  </head>
+
+  <body>
+    <h1>Please please please like, subscribe, and share our channel </h1>
+    <h1>Generation of HTML Elements using DOM</h1>
+    <ul id="d1">
+
+    </ul>
+    <script>
+        var courses=["Data Structures",'ReactJS','Angular','MERN',"MEAN","Java","Python",'Cloud','Devops']
+        courses.forEach(function(course){
+            var nli = document.createElement("li");
+            nli.innerHTML=course;
+            document.getElementById("d1").appendChild(nli)
+        })
+    </script>
+  </body>
+</html>
