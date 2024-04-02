@@ -68,10 +68,15 @@
                 border-radius: 10px;
                 cursor: pointer;
             }
+            
         </style>
     </head>
     <body>
         <h1>Edupoly</h1>
+        <div id="modal">
+            <button>close</button>
+            <div id="lightimage"></div>
+        </div>
         <div id="cartapp">
             <ul id="products">
 
@@ -178,6 +183,7 @@
                     newli.appendChild(addCartBtn)
                     document.getElementById("products").appendChild(newli)
                 })
+
                 // var productlist =  `
                 //     ${allProducts.map(function(product,i){
 
@@ -193,7 +199,11 @@
                 // document.getElementById('products').innerHTML=productlist;
             }
             genUI();
-           
+            document.querySelectorAll("#products img").forEach(function(el){
+                el.onclick = function(e){
+                    alert(e.target.src)
+                }
+            })
         </script>
     </body>
 </html>
