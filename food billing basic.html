@@ -68,12 +68,28 @@
                 border-radius: 10px;
                 cursor: pointer;
             }
-            
+            #lightbox{
+                display: none;
+                position: fixed;
+                top:0px;
+                left:0px;
+                backdrop-filter: blur(5px);
+                background-color: rgba(122,122,122,0.5);
+                width:100%;
+                height:100%;
+                justify-content: center;
+            }
+            #lightbox button{
+                position: absolute;
+                right:0px;
+                top:0px;
+                margin:40px;
+            }
         </style>
     </head>
     <body>
         <h1>Edupoly</h1>
-        <div id="modal">
+        <div id="lightbox">
             <button>close</button>
             <div id="lightimage"></div>
         </div>
@@ -201,9 +217,13 @@
             genUI();
             document.querySelectorAll("#products img").forEach(function(el){
                 el.onclick = function(e){
-                    alert(e.target.src)
+                    document.getElementById("lightbox").style.display='flex'
                 }
             })
+            document.querySelector("#lightbox button").onclick = function(){
+                console.log("HIHIH")
+                    document.getElementById("lightbox").style.display='none'
+            }
         </script>
     </body>
 </html>
