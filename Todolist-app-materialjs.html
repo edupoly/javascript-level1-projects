@@ -1,0 +1,178 @@
+<html>
+    <head>
+        <style>
+        </style>
+            <!-- Compiled and minified CSS -->
+            <!--Import Google Icon Font-->
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+            <!-- Compiled and minified JavaScript -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+                
+    </head>
+    <body>
+        <div id="header" class="card-panel m1">
+            <h1>Edupoly Todolist</h1>
+            <div onclick="filterTodos('all')">
+                <b>All <span id="allCount"></span></b>
+            </div>
+            <div onclick="filterTodos('completed')">
+                <b>Completed <span id="completedCount"></span></b>
+            </div>
+            <div onclick="filterTodos('notcompleted')">
+                <b>Pending <span id="notCompletedCount"></span></b>
+            </div>
+        </div>
+        
+        <div id="addTodo">
+            <div id="controls">
+                <!-- <label for="title">Enter Title</label> -->
+                <input type="text" id="title" placeholder="Enter Title">
+                <!-- <label for="description ">Enter Description</label> -->
+                <input type="text" id="description" placeholder="Enter description">
+            </div>
+            <div id="addBtn">
+                <h1 onclick="addTodo()">+</h1>
+            </div>
+        </div>
+        <h1 id="heading"></h1>
+        <ul id="todos"></ul>
+        <script>
+            var filter='all';
+            var todolist = [
+                {
+                    "id": 1,
+                    "title": "first todo",
+                    "description": "pick up milk",
+                    "complete": false,
+                    "canceled": false,
+                    "date": 1389878466730
+                },
+                {
+                    "id": 2,
+                    "title": "second todo",
+                    "description": "learn reactjs",
+                    "complete": true,
+                    "canceled": true,
+                    "date": 1389988926901 
+                },
+                {
+                    "id": 3,
+                    "title": "third todo",
+                    "description": "go for a run",
+                    "complete": false,
+                    "canceled": false,
+                    "date": 1389992494240  
+                }
+            ];
+            
+            function genUI(){
+                
+                var allTodoCount=todolist.length;
+                var completedTodoCount = todolist.filter(function(todo){
+                    return todo.complete
+                }).length;
+                var notCompletedTodoCount = todolist.filter(function(todo){
+                    return !todo.complete
+                }).length;
+                document.getElementById("allCount").innerHTML=allTodoCount;
+                document.getElementById("completedCount").innerHTML=completedTodoCount;
+                document.getElementById("notCompletedCount").innerHTML=notCompletedTodoCount;
+
+                document.getElementById("todos").innerHTML='';
+                var filteredtodolist;
+                if(filter==='all'){
+                    document.getElementById("heading").innerHTML="All Todos";
+                    filteredtodolist=todolist;
+                }
+                if(filter==='completed'){
+                    document.getElementById("heading").innerHTML="Complted Todos";
+                    filteredtodolist=todolist.filter(function(todo){
+                        return todo.complete
+                    });
+                }
+                if(filter==='notcompleted'){
+                    filteredtodolist=todolist.filter(function(todo){
+                        document.getElementById("heading").innerHTML="Incomplte Todos";
+                        return !todo.complete
+                    });
+                }
+                filteredtodolist.forEach(function(todo,i){
+                    var newTodoli = document.createElement("li");
+
+                    var statuspara = document.createElement('p');
+                    statuspara.innerHTML=todo.complete?"<span style='font-size:20px;'>&#9989;</span>":"pending";
+                    newTodoli.appendChild(statuspara);
+
+                    var titleh2 = document.createElement('h2');
+                    titleh2.innerHTML=todo.title;
+                    newTodoli.appendChild(titleh2);
+                    var datepara = document.createElement('p');
+                    datepara.innerHTML=(new Date(todo.date)).toLocaleDateString();
+                    newTodoli.appendChild(datepara);
+                    var descriptionpara = document.createElement('p');
+                    descriptionpara.innerHTML=todo.description;
+                    newTodoli.appendChild(descriptionpara);
+                    
+
+                    
+
+                    var donebtn = document.createElement('button');
+                    donebtn.innerHTML=todo.complete?"Undo":"Done";
+                    donebtn.onclick=function(){
+                        todolist = todolist.map(function(ftodo){
+                            if(ftodo.id===todo.id){
+                                ftodo.complete=!ftodo.complete;
+                            }
+                            return ftodo;
+                        })
+                        console.log(todolist)
+                        genUI();
+                    }
+                    newTodoli.appendChild(donebtn);
+                    var deletebtn = document.createElement('button');
+                    deletebtn.innerHTML="&#10060;";
+                    deletebtn.classList.add('delBtn')
+                    deletebtn.onclick=function(){
+                        todolist = todolist.filter(function(ftodo){
+                            return ftodo.id!==todo.id
+                        })
+                        genUI();
+                    }
+                    newTodoli.appendChild(deletebtn);
+                    document.getElementById("todos").appendChild(newTodoli)
+                })
+            }
+            genUI();
+            function addTodo(){
+                var allTodoCount=todolist.length;
+                var completedTodoCount = todolist.filter(function(todo){
+                    return todo.complete
+                }).length;
+                var notCompletedTodoCount = todolist.filter(function(todo){
+                    return !todo.complete
+                }).length;
+                document.getElementById("allCount").innerHTML=allTodoCount;
+                document.getElementById("completedCount").innerHTML=allTodoCount;
+                document.getElementById("notCompltedCount").innerHTML=allTodoCount;
+                var title = document.getElementById("title").value;
+                var description = document.getElementById("description").value;
+                if(todolist.length===0){
+                    todolist.push({id:1,title,description,complete:false,canceled:false,date:Date.now()});
+                }
+                else{
+                    todolist.push({id:todolist[todolist.length-1]['id']+1,title,description,complete:false,canceled:false,date:Date.now()});
+                }
+                document.getElementById('title').value=''
+                document.getElementById('description').value=''
+                genUI()
+            }
+            function filterTodos(f){
+                filter=f;
+                genUI();
+            }
+        </script>
+    </body>
+</html>
