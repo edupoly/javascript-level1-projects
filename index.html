@@ -1,0 +1,126 @@
+<html>
+    <head>
+        <style>
+            .box{
+                display: flex;
+                flex-direction: column;
+                width:250px;
+                align-items: center;
+                margin:50px;
+            }
+            .light{
+                border:2px solid;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background-color: rgb(43, 41, 41);
+                margin:5px;
+            }
+            /* #red{
+                background-color: rgb(110, 96, 96);
+            }
+            #green{
+                background-color: rgb(117, 131, 112);
+            }
+            #yellow{
+                background-color: rgb(138, 134, 108);
+            } */
+        </style>
+    </head>
+    <body>
+        <div class="box">
+            <div id="red" class="light"></div>
+            <div id="yellow" class="light"></div>
+            <div id="green" class="light"></div>
+            <div>
+                <input type="radio" name="operation" onchange="operate('manual')">Manual &nbsp;
+                <input type="radio" name="operation" onchange="operate('auto')">Auto &nbsp;
+            </div>
+            <div style="display: flex; gap: 10px;flex-wrap: nowrap;">
+                <div style="width:100px" id="manual">
+                    <br>
+                    <button onclick="startwith('red')">Make it Red</button>
+                    <button onclick="startwith('yellow')">Make it Yellow</button>
+                    <button onclick="startwith('green')">Make it Green</button>
+                </div>
+                <div style="width:100px" id="auto">
+                    <br>
+                    <input type="text" placeholder="Green Time" id="greenTime">
+                    <button onclick="autostartwith('red')">Start with Red</button>
+                    <button onclick="autostartwith('yellow')">Start with Yellow</button>
+                    <button onclick="autostartwith('green')">Start with Green</button>
+                </div>
+            </div>
+            
+        </div>
+        
+        <script>
+            document.getElementById("manual").style.display='none';
+            document.getElementById("auto").style.display='none';
+            var signals=[
+                {
+                    color:"red",
+                    status:false
+                },
+                {
+                    color:"yellow",
+                    status:false
+                },
+                {
+                    color:"green",
+                    status:false,
+                    time:10
+                },
+            ]
+            var operationFlag=null;
+            function operate(mode){
+                if(mode==='manual'){
+                    document.getElementById("manual").style.display='block';
+                    document.getElementById("auto").style.display='none';
+
+                }
+                if(mode==='auto'){
+                    document.getElementById("auto").style.display='block';
+                    document.getElementById("manual").style.display='none';
+
+                }
+            }
+            function startwith(color){
+                document.querySelectorAll(".light").forEach((el)=>{
+                    el.style.backgroundColor='black'
+                })
+                document.getElementById(color).style.backgroundColor=color;
+            }
+            function autostartwith(color){
+                if(!document.getElementById('greenTime').value){
+                    alert("Fill Green Time First")
+                }
+                else{
+                    if(color=='red'){
+                        document.querySelectorAll(".light").forEach((el)=>{
+                            el.style.backgroundColor='black'
+                        })
+                        document.getElementById('red').style.backgroundColor='red';
+                        setTimeout(function(){
+                            document.querySelectorAll(".light").forEach((el)=>{
+                                el.style.backgroundColor='black'
+                            })
+                            document.getElementById('yellow').style.backgroundColor='yellow';
+                            setTimeout(function(){
+                                document.querySelectorAll(".light").forEach((el)=>{
+                                el.style.backgroundColor='black'
+                            })
+                            document.getElementById('green').style.backgroundColor='green';
+                            setTimeout(function(){
+                                autostartwith("red")
+                            },+document.getElementById("greenTime").value*1000)
+                            },2000)
+                        },2000)
+                    }
+                    // ,document.getElementById("greenTime").value
+
+                }
+            }
+        </script>
+    </body>
+</html>
