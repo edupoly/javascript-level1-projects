@@ -1,0 +1,21 @@
+<script>
+    var i=1;
+    
+    
+    
+    var timer1 = setInterval(()=>{
+        var time = new Date();
+        var h = time.getHours()
+        var m = time.getMinutes()
+        var s = time.getSeconds()
+        var ms = time.getMilliseconds()
+        var ctime = h+":"+m+":"+s+":"+ms;
+        console.log(i++,ctime)
+    },250)
+</script>
+
+
+
+
+
+
