@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <style>
+            #d1{
+                display: flex;
+            }
+            #d1 ul{
+                border:2px solid;
+                padding:20px;
+                margin:20px;
+            }
+        </style>
+        <script>
+            function handledragstart(event){
+                console.log(event)
+                event.dataTransfer.setData('text/plain',event.target.id)
+                console.log(event.target.innerHTML)
+            }
+            function onDragOver(event) {
+                event.preventDefault();
+            }
+            function onDrop(event) {
+                const el = event
+                    .dataTransfer
+                    .getData('text/plain');
+                event.target.appendChild(document.getElementById(el))
+            }
+        </script>
+    </head>
+    <body>
+        <div id="d1">
+            <ul>
+                <li id="t1" draggable="true" ondragstart="handledragstart(event)">Rohit Sharma</li>
+                <li id="t2" draggable="true" ondragstart="handledragstart(event)">Virat Kohli</li>
+                <li id="t3" draggable="true" ondragstart="handledragstart(event)">Shubman Gill</li>
+                <li id="t4" draggable="true" ondragstart="handledragstart(event)">Rishabh Pant</li>
+            </ul>
+            <ul ondragover="onDragOver(event);" ondrop="onDrop(event);">
+                <li>Yashaswi Jaiswal</li>
+            </ul>
+        </div>
+    </body>
+</html>
