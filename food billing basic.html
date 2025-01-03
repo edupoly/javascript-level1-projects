@@ -10,17 +10,17 @@
                 flex-wrap: wrap;
             }
             #products{
-                width:70%;
+                width:60%;
                 box-sizing: border-box;
                 display: flex;
                 flex-wrap: wrap;
             }
             #products li{
-                width:22%;
+                max-width:200px;
                 list-style: none;
                 box-sizing: border-box;
                 padding:10px;
-                box-shadow: 1px 1px 5px -1px;
+                box-shadow: 1px 1px 5px -1px lightgray;
                 margin:10px;
                 display: flex;
                 flex-direction: column;
@@ -34,8 +34,10 @@
                 display: flex;
                 flex-wrap: wrap;
                 flex-direction: column;
-                justify-content: space-between;
+                justify-content: space-around;
                 height: 100%;
+                position: sticky;
+                top:0px;
             }
             #cart div{
                 display: flex;
@@ -54,7 +56,6 @@
                 border-radius: 50%;
             }
             #cart{
-                height:500px;
                 position: sticky;
                 top: 0px;
             }
@@ -68,31 +69,15 @@
                 border-radius: 10px;
                 cursor: pointer;
             }
-            #lightbox{
-                display: none;
-                position: fixed;
-                top:0px;
-                left:0px;
-                backdrop-filter: blur(5px);
-                background-color: rgba(122,122,122,0.5);
-                width:100%;
-                height:100%;
-                justify-content: center;
-            }
-            #lightbox button{
-                position: absolute;
-                right:0px;
-                top:0px;
-                margin:40px;
+            .btn:hover{
+                background-color: gray;
+                color:white;
+                transition: 0.5s;
             }
         </style>
     </head>
     <body>
         <h1>Edupoly</h1>
-        <div id="lightbox">
-            <button>close</button>
-            <div id="lightimage"></div>
-        </div>
         <div id="cartapp">
             <ul id="products">
 
@@ -151,8 +136,8 @@
 
                 var cartList = cartProducts.forEach(function(prod){
                     var newDiv = document.createElement('div');
-                    var btitle = document.createElement('b');
-                    btitle.innerHTML=prod.title.slice(0,20);
+                    var btitle = document.createElement('i');
+                    btitle.innerHTML=prod.title.slice(0,10);
                     newDiv.appendChild(btitle);
                     var uprice = document.createElement('u');
                     uprice.innerHTML=prod.price;
@@ -184,7 +169,7 @@
                     pimage.src="https://raw.githubusercontent.com/ParasGarg/Online-Grocery-Store/master"+product.images[0];
                     newli.appendChild(pimage);
                     var btitle = document.createElement("b");
-                    btitle.innerHTML=product.title;
+                    btitle.innerHTML=product.title.slice(0,10);
                     newli.appendChild(btitle);
                     var iprice = document.createElement("i");
                     iprice.innerHTML=product.price;
